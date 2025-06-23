@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Knowledge Hub - ML/DL/AI Study Materials</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="floating-particles" id="particles"></div>
+    
+    <a href="https://github.com/efrat-dev/ai-knowledge-notebooks" target="_blank" class="github-link">
+        <i class="fab fa-github"></i>
+    </a>
+
+    <div class="status-indicator" id="statusIndicator">
+        <i class="fas fa-circle"></i> <span id="statusText">Connecting...</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-brain"></i> AI Knowledge Hub</h1>
+            <p>Comprehensive Study Materials for Artificial Intelligence, Machine Learning & Data Science</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search topics, algorithms, or concepts..." id="searchBox">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div class="loading" id="loadingMessage">
+            <i class="fas fa-spinner"></i>
+            <p>Loading latest data...</p>
+        </div>
+
+        <div class="stats" id="statsContainer" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-number" id="totalFiles">0</div>
+                <div class="stat-label">Notebook Files</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalFolders">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="lastUpdate">Latest</div>
+                <div class="stat-label">Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="dataSource">Live</div>
+                <div class="stat-label">Data Source</div>
+            </div>
+        </div>
+
+        <div class="categories" id="categoriesContainer"></div>
+    </div>
+
+    <div id="fileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                <h2>Loading file...</h2>
+                <p>Please wait while the file loads from GitHub...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
