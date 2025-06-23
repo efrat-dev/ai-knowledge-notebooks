@@ -1,27 +1,10 @@
-// utils.js
-// Utility functions for data processing and formatting
+// dataLoader.js
+// Handles loading data from GitHub API and processing repository structure
 
-// Update status indicator
-function updateStatus(status, text) {
-    const indicator = document.getElementById('statusIndicator');
-    const statusText = document.getElementById('statusText');
-    
-    indicator.className = `status-indicator status-${status}`;
-    statusText.textContent = text;
-}
-
-// Format filename for display
-function formatFileName(filename) {
-    return filename
-        .replace('.ipynb', '')
-        .replace(/_/g, ' ')
-        .replace(/\b\w/g, l => l.toUpperCase());
-}
-
-// Load live data from GitHub
+// Loads live data from GitHub repository API
 async function loadLiveData() {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
 
     try {
         const response = await fetch(GITHUB_TREE_URL, {
@@ -71,36 +54,13 @@ async function loadLiveData() {
             }
         });
 
-        // Update stats
+        // Update statistics display
         document.getElementById('totalFiles').textContent = allFiles.length;
         document.getElementById('totalFolders').textContent = Object.keys(repositoryData).length;
-        document.getElementById('lastUpdate').textContent = 'Latest';
+        document.getElementById('lastUpdate').textContent = 'Current';
 
     } catch (error) {
         clearTimeout(timeoutId);
         throw error;
-    }
-}
-
-// Create floating particles animation
-function createParticles() {
-    const particlesContainer = document.getElementById('particles');
-    const particleCount = 20;
-
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        
-        const size = Math.random() * 6 + 4;
-        particle.style.width = size + 'px';
-        particle.style.height = size + 'px';
-        
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-        
-        particle.style.animationDelay = Math.random() * 6 + 's';
-        particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
-        
-        particlesContainer.appendChild(particle);
     }
 }
