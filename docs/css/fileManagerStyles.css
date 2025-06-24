@@ -219,6 +219,7 @@
     border-radius: 15px;
     margin: 0 -5px;
     border: 1px solid #e2e8f0;
+    color: #1a202c; /* הוספת צבע בסיסי כהה */
 }
 
 /* Scrollbar styling for notebook content */
@@ -285,7 +286,7 @@
     font-size: 0.9rem;
     font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
     line-height: 1.5;
-    color: #e2e8f0;
+    color: #f7fafc; /* שמירה על צבע בהיר לרקע כהה */
     background: transparent;
     border: none;
 }
