@@ -419,59 +419,6 @@ body::before {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Spectacular file list */
-.files-list {
-    display: none;
-    margin-top: 25px;
-}
-
-.file-item {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    margin: 10px 0;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    transition: all var(--animation-fast) ease;
-    cursor: pointer;
-    justify-content: space-between;
-    backdrop-filter: blur(10px);
-}
-
-.file-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateX(10px) scale(1.02);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
-}
-
-.file-icon {
-    margin-right: 15px;
-    font-size: 1.3rem;
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: fileIconGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes fileIconGlow {
-    0% { filter: brightness(1); }
-    100% { filter: brightness(1.3); }
-}
-
-.file-name {
-    flex-grow: 1;
-    font-weight: 500;
-    color: white;
-}
-
-.file-date {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
 /* Incredible statistics grid */
 .stats {
     display: grid;
@@ -1185,3 +1132,65 @@ body::before {
 }
 
 /* End of ultra-impressive styles */
+
+
+/* Fix for file display visibility - maintaining the stunning design */
+
+/* Minimal fix for file display visibility - professional and clean */
+
+/* Spectacular file items matching the cosmic design */
+/* Spectacular file items with cosmic blue-purple design */
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    background: linear-gradient(135deg, rgba(103, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 50%, rgba(255, 107, 107, 0.1) 100%);
+    border: 1px solid rgba(103, 126, 234, 0.3);
+    border-radius: 15px;
+    transition: all var(--animation-fast) ease;
+    cursor: pointer;
+    justify-content: space-between;
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(103, 126, 234, 0.2);
+}
+
+.file-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 0, 128, 0.2), rgba(0, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.file-item:hover::before {
+    left: 100%;
+}
+
+.file-item:hover {
+    background: linear-gradient(135deg, rgba(103, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.25) 50%, rgba(255, 107, 107, 0.2) 100%);
+    transform: translateX(10px) scale(1.02);
+    border-color: rgba(255, 0, 128, 0.5);
+    box-shadow: 0 8px 25px rgba(103, 126, 234, 0.4), 0 0 20px rgba(255, 0, 128, 0.3);
+}
+
+.file-name {
+    flex-grow: 1;
+    font-weight: 500;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 10px rgba(103, 126, 234, 0.5);
+}
+
+.file-date {
+    font-size: 0.9rem;
+    color: rgba(103, 126, 234, 0.8);
+    text-shadow: 0 0 5px rgba(103, 126, 234, 0.3);
+}
