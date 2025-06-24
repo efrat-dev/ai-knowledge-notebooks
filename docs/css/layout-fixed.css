@@ -1,0 +1,82 @@
+/* layout-fixed.css - Fixed positioning elements and status indicators
+   Purpose: Handles elements that are positioned fixed on the screen like GitHub link and status indicators
+*/
+
+/* Futuristic GitHub link */
+.github-link {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    padding: 18px;
+    border-radius: 50%;
+    box-shadow: var(--glass-shadow);
+    transition: all var(--animation-medium) cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    text-decoration: none;
+    animation: githubFloat 3s ease-in-out infinite;
+}
+
+.github-link:hover {
+    transform: scale(1.15) rotate(5deg);
+    background: var(--glass-bg-hover);
+    box-shadow: var(--glass-shadow-hover), var(--shadow-cyber);
+}
+
+.github-link i {
+    font-size: 1.6rem;
+    color: white;
+    transition: all var(--animation-fast) ease;
+}
+
+.github-link:hover i {
+    color: #00f2fe;
+    animation: githubSpin 0.5s ease-in-out;
+}
+
+/* Advanced status indicator */
+.status-indicator {
+    position: fixed;
+    top: 90px;
+    right: 25px;
+    padding: 12px 18px;
+    border-radius: 25px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    font-size: 0.9rem;
+    box-shadow: var(--glass-shadow);
+    transition: all var(--animation-medium) ease;
+    z-index: 999;
+    animation: statusAppear 0.5s ease-out 2s both;
+}
+
+.status-live {
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.status-fallback {
+    color: #ffaa00;
+    text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+}
+
+.status-error {
+    color: #ff4444;
+    text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+/* Error message styling */
+.error-message {
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    color: #ff4444;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    margin: 25px 0;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    animation: errorShake 0.5s ease-in-out;
+}

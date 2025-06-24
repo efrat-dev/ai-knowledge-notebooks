@@ -1,0 +1,44 @@
+/* variables.css - CSS Custom Properties & Design Tokens
+   Contains all CSS variables, color schemes, gradients, and design system tokens
+   This file should be imported first in your main CSS file
+*/
+
+/* Import advanced fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* Advanced global variables */
+:root {
+    /* Advanced gradients */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
+    --secondary-gradient: linear-gradient(135deg, #ff006e 0%, #8338ec 25%, #3a86ff 50%, #06ffa5 75%, #ffbe0b 100%);
+    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --neon-gradient: linear-gradient(135deg, #ff0080 0%, #ff8c00 25%, #40e0d0 50%, #ee82ee 75%, #7fffd4 100%);
+    --cosmic-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 24%, #24243e 100%);
+    --aurora-gradient: linear-gradient(135deg, #00c9ff 0%, #92fe9d 35%, #ff9a9e 70%, #fecfef 100%);
+    --matrix-gradient: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+    --fire-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    
+    /* Glassmorphism variables */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-bg-hover: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --glass-shadow-hover: 0 15px 35px 0 rgba(31, 38, 135, 0.5);
+    
+    /* Advanced shadows */
+    --shadow-neon: 0 0 20px rgba(255, 0, 128, 0.4), 0 0 40px rgba(255, 0, 128, 0.3), 0 0 60px rgba(255, 0, 128, 0.2);
+    --shadow-cyber: 0 0 20px rgba(0, 255, 255, 0.4), 0 0 40px rgba(0, 255, 255, 0.2);
+    --shadow-mega: 0 20px 40px rgba(0, 0, 0, 0.3), 0 40px 80px rgba(0, 0, 0, 0.2);
+    --shadow-glow: 0 0 30px rgba(255, 255, 255, 0.3);
+    
+    /* Animation timings */
+    --animation-fast: 0.3s;
+    --animation-medium: 0.6s;
+    --animation-slow: 1s;
+    --animation-ultra-slow: 3s;
+    
+    /* Sizes */
+    --border-radius: 20px;
+    --border-radius-large: 30px;
+    --blur-strength: 20px;
+}

@@ -1,0 +1,119 @@
+/* effects.css - Advanced visual effects and special styling components
+   Purpose: Handles special visual effects like holographic effects, neon borders, particles, and premium effects
+*/
+
+/* Matrix-style background effect */
+.matrix-bg::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: matrixMove 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Holographic effect for cards */
+.holographic {
+    position: relative;
+    overflow: hidden;
+}
+
+.holographic::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.holographic:hover::after {
+    left: 100%;
+}
+
+/* Neon border animation */
+.neon-border {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(var(--cosmic-gradient)) padding-box,
+                var(--neon-gradient) border-box;
+    animation: neonPulse 3s ease-in-out infinite;
+}
+
+/* Quantum dot effect */
+.quantum-dots {
+    position: relative;
+}
+
+.quantum-dots::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 6px;
+    height: 6px;
+    background: var(--neon-gradient);
+    border-radius: 50%;
+    animation: quantumBlink 2s ease-in-out infinite;
+}
+
+/* Incredible floating particles */
+.floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.1) 70%, transparent 100%);
+    border-radius: 50%;
+    animation: particleFloat 8s ease-in-out infinite;
+}
+
+/* Final touches - Ultra-premium effects */
+.premium-glow {
+    position: relative;
+}
+
+.premium-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: var(--neon-gradient);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    animation: premiumPulse 4s ease-in-out infinite;
+}
+
+.premium-glow:hover::before {
+    opacity: 0.5;
+}
+
+/* Performance optimizations for animations */
+@supports (backdrop-filter: blur(20px)) {
+    .glass-effect {
+        backdrop-filter: blur(20px);
+    }
+}

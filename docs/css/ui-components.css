@@ -1,0 +1,160 @@
+/* ui-components.css - Interactive UI components including modals, buttons, file items
+   Purpose: Handles modal dialogs, buttons, file listing components, and other interactive elements
+*/
+
+/* Epic modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    animation: modalAppear 0.3s ease-out;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    padding: 50px;
+    border-radius: var(--border-radius-large);
+    max-width: 800px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-mega);
+    animation: modalContentAppear 0.4s ease-out 0.1s both;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all var(--animation-fast) ease;
+    line-height: 1;
+}
+
+.close:hover {
+    color: #ff6b6b;
+    transform: scale(1.2) rotate(90deg);
+}
+
+/* Ultra-modern button styles */
+.cyber-button {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--neon-gradient);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.cyber-button:hover::before {
+    left: 0;
+    opacity: 0.1;
+}
+
+.cyber-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Spectacular file items with cosmic blue-purple design */
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    background: linear-gradient(135deg, rgba(103, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 50%, rgba(255, 107, 107, 0.1) 100%);
+    border: 1px solid rgba(103, 126, 234, 0.3);
+    border-radius: 15px;
+    transition: all var(--animation-fast) ease;
+    cursor: pointer;
+    justify-content: space-between;
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(103, 126, 234, 0.2);
+}
+
+.file-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 0, 128, 0.2), rgba(0, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.file-item:hover::before {
+    left: 100%;
+}
+
+.file-item:hover {
+    background: linear-gradient(135deg, rgba(103, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.25) 50%, rgba(255, 107, 107, 0.2) 100%);
+    transform: translateX(10px) scale(1.02);
+    border-color: rgba(255, 0, 128, 0.5);
+    box-shadow: 0 8px 25px rgba(103, 126, 234, 0.4), 0 0 20px rgba(255, 0, 128, 0.3);
+}
+
+.file-name {
+    flex-grow: 1;
+    font-weight: 500;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 10px rgba(103, 126, 234, 0.5);
+}
+
+.file-date {
+    font-size: 0.9rem;
+    color: rgba(103, 126, 234, 0.8);
+    text-shadow: 0 0 5px rgba(103, 126, 234, 0.3);
+}
+
+/* Error message styling */
+.error-message {
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    color: #ff4444;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    margin: 25px 0;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    animation: errorShake 0.5s ease-in-out;
+}

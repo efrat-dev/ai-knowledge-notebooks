@@ -1,0 +1,11 @@
+/* main.css - Main CSS File with All Imports */
+
+/* Import all component stylesheets */
+@import 'base.css';
+@import 'header.css';
+@import 'search.css';
+@import 'cards.css';
+@import 'ui-components.css';
+@import 'layout-fixed.css';
+@import 'effects.css';
+@import 'responsive.css';

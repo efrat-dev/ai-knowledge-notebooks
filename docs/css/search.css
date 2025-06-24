@@ -1,0 +1,97 @@
+/* search.css - Search interface with glowing effects and animations
+   Purpose: Handles the search container, input field, icon, and related loading states
+*/
+
+/* Mind-blowing search container */
+.search-container {
+    max-width: 700px;
+    margin: 0 auto 50px;
+    position: relative;
+    animation: searchAppear 1s ease-out 1s both;
+}
+
+.search-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--neon-gradient);
+    border-radius: 35px;
+    z-index: -1;
+    animation: searchBorderGlow 3s ease-in-out infinite alternate;
+}
+
+.search-box {
+    width: 100%;
+    padding: 20px 25px 20px 60px;
+    border: none;
+    border-radius: 35px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    outline: none;
+    transition: all var(--animation-medium) cubic-bezier(0.4, 0, 0.2, 1);
+    color: white;
+}
+
+.search-box::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 300;
+}
+
+.search-box:focus {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: var(--glass-shadow-hover), var(--shadow-cyber);
+    background: var(--glass-bg-hover);
+    border-color: rgba(0, 255, 255, 0.5);
+}
+
+.search-icon {
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.3rem;
+    animation: searchIconPulse 2s ease-in-out infinite;
+}
+
+/* Loading animation for search */
+.loading {
+    text-align: center;
+    margin: 80px 0;
+    animation: loadingAppear 0.5s ease-out;
+}
+
+.loading i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    background: var(--neon-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: loadingSpin 1s linear infinite, loadingGlow 2s ease-in-out infinite alternate;
+}
+
+.loading p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.8;
+    animation: loadingText 1.5s ease-in-out infinite alternate;
+}
+
+/* Advanced loading states */
+.loading-dots {
+    display: inline-block;
+}
+
+.loading-dots::after {
+    content: '';
+    animation: loadingDots 1.5s steps(4, end) infinite;
+}

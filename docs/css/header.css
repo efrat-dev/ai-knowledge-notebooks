@@ -1,0 +1,57 @@
+/* header.css - Header section with impressive title and subtitle effects
+   Purpose: Handles the main header area including animated title, subtitle, and rotating background
+*/
+
+/* Ultra-impressive header section */
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 60px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: var(--aurora-gradient);
+    opacity: 0.1;
+    animation: headerRotate 20s linear infinite;
+    z-index: -1;
+}
+
+.header h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 900;
+    margin-bottom: 30px;
+    background: var(--neon-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: var(--shadow-neon);
+    animation: titleGlow 2s ease-in-out infinite alternate, titleFloat 4s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+}
+
+.header h1 i {
+    animation: brainPulse 2s ease-in-out infinite;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.header p {
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    font-weight: 300;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: subtitleFade 1s ease-out 0.5s both;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}

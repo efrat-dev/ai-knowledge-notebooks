@@ -1,0 +1,183 @@
+/* AI Knowledge Hub - Ultra Impressive Styles
+   Insanely stunning design with advanced visual effects
+*/
+
+/* Responsive design with advanced breakpoints */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+        padding: 15px;
+    }
+    
+    .categories {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 40px 0;
+        margin-bottom: 40px;
+    }
+    
+    .header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .categories {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .category-card {
+        padding: 30px;
+    }
+    
+    .stats {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
+    .search-container {
+        margin-bottom: 30px;
+    }
+    
+    .search-box {
+        padding: 18px 20px 18px 50px;
+        font-size: 1rem;
+    }
+    
+    .modal-content {
+        padding: 30px;
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+    
+    .github-link {
+        top: 15px;
+        right: 15px;
+        padding: 15px;
+    }
+    
+    .status-indicator {
+        top: 75px;
+        right: 15px;
+        font-size: 0.8rem;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .header p {
+        font-size: 1rem;
+    }
+    
+    .category-card {
+        padding: 25px;
+    }
+    
+    .category-icon {
+        font-size: 3rem;
+    }
+    
+    .stat-number {
+        font-size: 2.2rem;
+    }
+    
+    .search-box {
+        padding: 15px 18px 15px 45px;
+    }
+}
+
+/* Advanced animation delays for staggered effects */
+
+
+.container {
+    animation: preloader 1s ease-out;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --glass-bg: rgba(0, 0, 0, 0.8);
+        --glass-bg-hover: rgba(0, 0, 0, 0.9);
+        --glass-border: rgba(255, 255, 255, 0.8);
+    }
+    
+    .category-card,
+    .stat-card,
+    .search-box,
+    .modal-content {
+        border: 2px solid white;
+    }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: var(--cosmic-gradient);
+    }
+}
+
+/* Advanced hover effects for interactive elements */
+.category-card:hover .category-icon {
+    animation: iconBounce 0.6s ease-in-out;
+}
+/* Cyber-style text effects */
+.cyber-text {
+    font-family: 'Orbitron', monospace;
+    background: var(--neon-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: cyberGlow 2s ease-in-out infinite alternate;
+}
+
+/* Ultra-responsive typography */
+@media (max-width: 320px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .category-title {
+        font-size: 1.3rem;
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .floating-particles,
+    .github-link,
+    .status-indicator {
+        display: none !important;
+    }
+    
+    .category-card {
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+}
