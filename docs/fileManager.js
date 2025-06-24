@@ -1,5 +1,10 @@
 // fileManager.js
 // Handles file operations, modal displays, and file list interactions
+// Enhanced with history navigation system
+
+// History management for modal navigation
+let modalHistory = [];
+let currentHistoryIndex = -1;
 
 // Toggles visibility of files list for a specific category
 function toggleFiles(category) {
@@ -18,12 +23,165 @@ function toggleFiles(category) {
     }
 }
 
+// Adds a state to modal history
+function addToModalHistory(state) {
+    // Remove any future history if we're in the middle of history
+    if (currentHistoryIndex < modalHistory.length - 1) {
+        modalHistory = modalHistory.slice(0, currentHistoryIndex + 1);
+    }
+    
+    modalHistory.push(state);
+    currentHistoryIndex = modalHistory.length - 1;
+    
+    // Update navigation UI
+    updateHistoryNavigation();
+}
+
+// Updates the history navigation buttons
+function updateHistoryNavigation() {
+    const backBtn = document.getElementById('historyBackBtn');
+    const forwardBtn = document.getElementById('historyForwardBtn');
+    const historyPosition = document.getElementById('historyPosition');
+    
+    if (backBtn) {
+        backBtn.disabled = currentHistoryIndex <= 0;
+        backBtn.style.opacity = currentHistoryIndex <= 0 ? '0.5' : '1';
+    }
+    
+    if (forwardBtn) {
+        forwardBtn.disabled = currentHistoryIndex >= modalHistory.length - 1;
+        forwardBtn.style.opacity = currentHistoryIndex >= modalHistory.length - 1 ? '0.5' : '1';
+    }
+    
+    if (historyPosition) {
+        historyPosition.textContent = `${currentHistoryIndex + 1} / ${modalHistory.length}`;
+    }
+}
+
+// Navigates back in history
+function goBackInHistory() {
+    if (currentHistoryIndex > 0) {
+        currentHistoryIndex--;
+        const previousState = modalHistory[currentHistoryIndex];
+        restoreModalState(previousState);
+    }
+}
+
+// Navigates forward in history
+function goForwardInHistory() {
+    if (currentHistoryIndex < modalHistory.length - 1) {
+        currentHistoryIndex++;
+        const nextState = modalHistory[currentHistoryIndex];
+        restoreModalState(nextState);
+    }
+}
+
+// Restores a modal state from history
+function restoreModalState(state) {
+    const modalContent = document.getElementById('modalContent');
+    modalContent.innerHTML = state.content;
+    
+    // Restore any event listeners or special handling
+    if (state.type === 'notebook_content') {
+        restoreNotebookContentHandlers();
+    }
+    
+    updateHistoryNavigation();
+}
+
+// Restores event handlers for notebook content
+function restoreNotebookContentHandlers() {
+    const notebookContentDiv = document.getElementById('notebookContent');
+    if (notebookContentDiv) {
+        const links = notebookContentDiv.querySelectorAll('a');
+        links.forEach(link => {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+            link.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+        
+        // Initialize MathJax if available
+        if (window.MathJax) {
+            MathJax.typesetPromise([document.getElementById('modalContent')]).catch((err) => console.log(err));
+        }
+    }
+}
+
+// Creates the history navigation bar HTML
+function createHistoryNavigationBar() {
+    return `
+        <div id="historyNavBar" style="
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 0; 
+            border-bottom: 1px solid #e0e0e0; 
+            margin-bottom: 20px;
+        ">
+            <div style="display: flex; gap: 10px;">
+                <button id="historyBackBtn" onclick="goBackInHistory()" style="
+                    background: #6c757d; 
+                    color: white; 
+                    border: none; 
+                    padding: 8px 12px; 
+                    border-radius: 5px; 
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                " disabled>
+                    <i class="fas fa-arrow-left"></i>
+                    <span>אחורה</span>
+                </button>
+                <button id="historyForwardBtn" onclick="goForwardInHistory()" style="
+                    background: #6c757d; 
+                    color: white; 
+                    border: none; 
+                    padding: 8px 12px; 
+                    border-radius: 5px; 
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                " disabled>
+                    <span>קדימה</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <div style="color: #6c757d; font-size: 0.9rem;">
+                <span id="historyPosition">1 / 1</span>
+            </div>
+            <button onclick="closeModal()" style="
+                background: #dc3545; 
+                color: white; 
+                border: none; 
+                padding: 8px 12px; 
+                border-radius: 5px; 
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            ">
+                <i class="fas fa-times"></i>
+                <span>סגור</span>
+            </button>
+        </div>
+    `;
+}
+
 // Opens file modal with access links and information
 function openFile(filePath, fileName) {
     const modal = document.getElementById('fileModal');
     const modalContent = document.getElementById('modalContent');
     
-    modalContent.innerHTML = `
+    // Clear history when opening new modal session
+    modalHistory = [];
+    currentHistoryIndex = -1;
+    
+    const content = `
+        ${createHistoryNavigationBar()}
         <h2><i class="fas fa-file-code"></i> ${formatFileName(fileName)}</h2>
         <div style="text-align: center; margin: 30px 0;">
             <p style="margin-bottom: 20px;">Access this Jupyter Notebook:</p>
@@ -63,6 +221,16 @@ function openFile(filePath, fileName) {
         </div>
     `;
     
+    modalContent.innerHTML = content;
+    
+    // Add initial state to history
+    addToModalHistory({
+        type: 'file_info',
+        content: content,
+        filePath: filePath,
+        fileName: fileName
+    });
+    
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
 }
@@ -73,13 +241,16 @@ async function viewContent(filePath, fileName) {
     const modalContent = document.getElementById('modalContent');
     
     // Show loading state
-    modalContent.innerHTML = `
+    const loadingContent = `
+        ${createHistoryNavigationBar()}
         <h2><i class="fas fa-book-open"></i> ${formatFileName(fileName)}</h2>
         <div style="text-align: center; padding: 50px;">
             <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #667eea;"></i>
             <p style="margin-top: 20px;">Loading content...</p>
         </div>
     `;
+    
+    modalContent.innerHTML = loadingContent;
     
     try {
         // Fix the file path - remove /docs/ prefix if it exists and ensure correct path
@@ -131,7 +302,8 @@ async function viewContent(filePath, fileName) {
         
     } catch (error) {
         console.error('Error loading content:', error);
-        modalContent.innerHTML = `
+        const errorContent = `
+            ${createHistoryNavigationBar()}
             <h2><i class="fas fa-exclamation-triangle"></i> Error Loading Content</h2>
             <div style="text-align: center; padding: 50px;">
                 <p style="color: #dc3545; margin-bottom: 20px;">
@@ -143,13 +315,18 @@ async function viewContent(filePath, fileName) {
                 <p style="font-size: 0.9rem; color: #666;">
                     Please try using one of the external links above or check the file path.
                 </p>
-                <button onclick="closeModal()" 
-                        style="background: #6c757d; color: white; padding: 10px 20px; 
-                               border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">
-                    Close
-                </button>
             </div>
         `;
+        
+        modalContent.innerHTML = errorContent;
+        
+        // Add error state to history
+        addToModalHistory({
+            type: 'error',
+            content: errorContent,
+            filePath: filePath,
+            fileName: fileName
+        });
     }
 }
 
@@ -158,15 +335,11 @@ function renderNotebookContent(notebookData, fileName) {
     const modalContent = document.getElementById('modalContent');
     
     let contentHtml = `
+        ${createHistoryNavigationBar()}
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
             <h2><i class="fas fa-book-open"></i> ${formatFileName(fileName)}</h2>
-            <button onclick="closeModal()" 
-                    style="background: #6c757d; color: white; padding: 8px 15px; 
-                           border: none; border-radius: 5px; cursor: pointer;">
-                <i class="fas fa-times"></i> Close
-            </button>
         </div>
-        <div id="notebookContent" style="max-height: 70vh; overflow-y: auto; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+        <div id="notebookContent" style="max-height: 60vh; overflow-y: auto; padding: 20px; background: #f8f9fa; border-radius: 10px;">
     `;
     
     // Process each cell in the notebook
@@ -211,21 +384,15 @@ function renderNotebookContent(notebookData, fileName) {
     contentHtml += `</div>`;
     modalContent.innerHTML = contentHtml;
     
-    // Fix all links to open in new tab and prevent modal interference
-    const notebookContentDiv = document.getElementById('notebookContent');
-    const links = notebookContentDiv.querySelectorAll('a');
-    links.forEach(link => {
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener noreferrer');
-        link.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
+    // Add notebook content state to history
+    addToModalHistory({
+        type: 'notebook_content',
+        content: contentHtml,
+        fileName: fileName
     });
     
-    // Initialize MathJax if available
-    if (window.MathJax) {
-        MathJax.typesetPromise([modalContent]).catch((err) => console.log(err));
-    }
+    // Fix all links to open in new tab and prevent modal interference
+    restoreNotebookContentHandlers();
 }
 
 // Enhanced markdown parser with support for math, icons, and formatting
@@ -341,8 +508,8 @@ function handleInternalNotebookLink(relativePath, linkText) {
     let currentDir = getCurrentDirectory();
     let fullPath = currentDir ? `${currentDir}/${fileName}` : fileName;
     
-    // Open the file modal for the linked notebook
-    openFile(fullPath, fileName);
+    // Open the file modal for the linked notebook (this will add to history)
+    viewContentWithContext(fullPath, fileName);
 }
 
 // Helper function to determine current directory context
@@ -394,7 +561,7 @@ function handleInternalNotebookLink(relativePath, linkText) {
     }
     
     // Open the file modal for the linked notebook
-    openFile(fullPath, fileName);
+    viewContentWithContext(fullPath, fileName);
 }
 
 // Closes the file modal and restores page scroll
@@ -402,4 +569,30 @@ function closeModal() {
     const modal = document.getElementById('fileModal');
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
+    
+    // Clear history when closing modal
+    modalHistory = [];
+    currentHistoryIndex = -1;
 }
+
+// Keyboard navigation support
+document.addEventListener('keydown', function(event) {
+    const modal = document.getElementById('fileModal');
+    if (modal && modal.style.display === 'block') {
+        // Alt + Left Arrow for back
+        if (event.altKey && event.key === 'ArrowLeft') {
+            event.preventDefault();
+            goBackInHistory();
+        }
+        // Alt + Right Arrow for forward
+        else if (event.altKey && event.key === 'ArrowRight') {
+            event.preventDefault();
+            goForwardInHistory();
+        }
+        // Escape to close modal
+        else if (event.key === 'Escape') {
+            event.preventDefault();
+            closeModal();
+        }
+    }
+});
