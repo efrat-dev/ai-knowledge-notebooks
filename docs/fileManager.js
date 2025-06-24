@@ -48,7 +48,7 @@ function openFile(filePath, fileName) {
                           border-radius: 8px; text-decoration: none; font-weight: 500;">
                     <i class="fab fa-google"></i> Open in Colab
                 </a>
-                <button onclick="viewContent('${filePath}', '${fileName}')" 
+                <button onclick="viewContentWithContext('${filePath}', '${fileName}')" 
                         style="display: inline-block; background: #6f42c1; color: white; padding: 12px 20px; 
                                border-radius: 8px; border: none; cursor: pointer; font-weight: 500;">
                     <i class="fas fa-book-open"></i> View Content
@@ -82,8 +82,48 @@ async function viewContent(filePath, fileName) {
     `;
     
     try {
+        // Fix the file path - remove /docs/ prefix if it exists and ensure correct path
+        let correctedPath = filePath;
+        
+        // Remove /docs/ prefix if exists
+        if (correctedPath.startsWith('docs/')) {
+            correctedPath = correctedPath.substring(5);
+        }
+        
+        // If path doesn't include directory structure, try to reconstruct it
+        if (!correctedPath.includes('/') && fileName) {
+            // Try to guess the correct path based on common patterns
+            const possiblePaths = [
+                `AI ML DATA SCIENCE OVERVIEW/${fileName}`,
+                `DATA SCIENCE/${fileName}`,
+                `MACHINE LEARNING/${fileName}`,
+                `ARTIFICIAL INTELLIGENCE/${fileName}`,
+                fileName // fallback to root
+            ];
+            
+            // Try each possible path
+            for (const testPath of possiblePaths) {
+                try {
+                    const testResponse = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${testPath}`);
+                    if (testResponse.ok) {
+                        correctedPath = testPath;
+                        break;
+                    }
+                } catch (e) {
+                    continue; // Try next path
+                }
+            }
+        }
+        
+        console.log('Trying to fetch:', correctedPath);
+        
         // Fetch the raw notebook content
-        const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${filePath}`);
+        const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${correctedPath}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
         const notebookData = await response.json();
         
         // Render the content
@@ -97,8 +137,11 @@ async function viewContent(filePath, fileName) {
                 <p style="color: #dc3545; margin-bottom: 20px;">
                     <i class="fas fa-times-circle"></i> Failed to load notebook content
                 </p>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                    Path attempted: <code>${filePath}</code>
+                </p>
                 <p style="font-size: 0.9rem; color: #666;">
-                    Please try using one of the external links above.
+                    Please try using one of the external links above or check the file path.
                 </p>
                 <button onclick="closeModal()" 
                         style="background: #6c757d; color: white; padding: 10px 20px; 
@@ -123,7 +166,7 @@ function renderNotebookContent(notebookData, fileName) {
                 <i class="fas fa-times"></i> Close
             </button>
         </div>
-        <div style="max-height: 70vh; overflow-y: auto; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+        <div id="notebookContent" style="max-height: 70vh; overflow-y: auto; padding: 20px; background: #f8f9fa; border-radius: 10px;">
     `;
     
     // Process each cell in the notebook
@@ -168,6 +211,17 @@ function renderNotebookContent(notebookData, fileName) {
     contentHtml += `</div>`;
     modalContent.innerHTML = contentHtml;
     
+    // Fix all links to open in new tab and prevent modal interference
+    const notebookContentDiv = document.getElementById('notebookContent');
+    const links = notebookContentDiv.querySelectorAll('a');
+    links.forEach(link => {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+        link.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    });
+    
     // Initialize MathJax if available
     if (window.MathJax) {
         MathJax.typesetPromise([modalContent]).catch((err) => console.log(err));
@@ -205,8 +259,20 @@ function parseMarkdown(markdown) {
     // Wrap consecutive list items
     html = html.replace(/(<li[^>]*>.*<\/li>\s*)+/gim, '<ul style="margin: 15px 0; padding-left: 30px;">$&</ul>');
     
-    // Links
-    html = html.replace(/\[([^\]]*)\]\(([^\)]*)\)/gim, '<a href="$2" target="_blank" style="color: #667eea; text-decoration: none;">$1 <i class="fas fa-external-link-alt" style="font-size: 0.8rem;"></i></a>');
+    // Links - handle internal notebook links and external links differently
+    html = html.replace(/\[([^\]]*)\]\(([^\)]*)\)/gim, (match, linkText, linkUrl) => {
+        // Check if it's an internal notebook link (ends with .ipynb)
+        if (linkUrl.endsWith('.ipynb')) {
+            // Extract filename from path (remove ./ prefix if exists)
+            let fileName = linkUrl.replace(/^\.\//, '');
+            // For internal links, we need to construct the full path based on current location
+            // This will be handled by intercepting the click
+            return `<a href="#" onclick="handleInternalNotebookLink('${linkUrl}', '${linkText}'); return false;" style="color: #667eea; text-decoration: none; cursor: pointer;">${linkText} <i class="fas fa-book" style="font-size: 0.8rem;"></i></a>`;
+        } else {
+            // External link - open in new tab
+            return `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" style="color: #667eea; text-decoration: none;">${linkText} <i class="fas fa-external-link-alt" style="font-size: 0.8rem;"></i></a>`;
+        }
+    });
     
     // Font Awesome icons (e.g., :fa-icon-name:)
     html = html.replace(/:fa-([\w-]+):/gim, '<i class="fas fa-$1"></i>');
@@ -263,6 +329,72 @@ function escapeHtml(text) {
         "'": '&#039;'
     };
     return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+// Handles internal notebook links - opens the file selection modal
+function handleInternalNotebookLink(relativePath, linkText) {
+    // Extract filename from relative path
+    let fileName = relativePath.replace(/^\.\//, '');
+    
+    // Get the current directory context from the last opened file
+    // This assumes we have access to the current directory structure
+    let currentDir = getCurrentDirectory();
+    let fullPath = currentDir ? `${currentDir}/${fileName}` : fileName;
+    
+    // Open the file modal for the linked notebook
+    openFile(fullPath, fileName);
+}
+
+// Helper function to determine current directory context
+function getCurrentDirectory() {
+    // This could be enhanced to track the current directory context
+    // For now, we'll try to guess based on common patterns
+    
+    // You can customize this based on your actual directory structure
+    const commonDirs = [
+        'AI ML DATA SCIENCE OVERVIEW',
+        'DATA SCIENCE', 
+        'MACHINE LEARNING',
+        'ARTIFICIAL INTELLIGENCE'
+    ];
+    
+    // Return the most likely directory - this could be enhanced
+    // to actually track the current context
+    return 'AI ML DATA SCIENCE OVERVIEW'; // Default assumption
+}
+
+// Enhanced version that can track directory context
+let currentNotebookContext = null;
+
+// Update viewContent to track current directory
+async function viewContentWithContext(filePath, fileName, contextDir = null) {
+    // Set current context
+    if (contextDir) {
+        currentNotebookContext = contextDir;
+    } else {
+        // Try to extract directory from filePath
+        const pathParts = filePath.split('/');
+        if (pathParts.length > 1) {
+            currentNotebookContext = pathParts.slice(0, -1).join('/');
+        }
+    }
+    
+    // Call the original viewContent function
+    return viewContent(filePath, fileName);
+}
+
+// Enhanced handleInternalNotebookLink that uses context
+function handleInternalNotebookLink(relativePath, linkText) {
+    let fileName = relativePath.replace(/^\.\//, '');
+    
+    // Use current context if available
+    let fullPath = fileName;
+    if (currentNotebookContext) {
+        fullPath = `${currentNotebookContext}/${fileName}`;
+    }
+    
+    // Open the file modal for the linked notebook
+    openFile(fullPath, fileName);
 }
 
 // Closes the file modal and restores page scroll
