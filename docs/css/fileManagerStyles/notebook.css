@@ -1,0 +1,38 @@
+/* notebook.css - Jupyter Notebook Content Display */
+
+.notebook-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.notebook-content {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 15px;
+    margin: 0 -5px;
+    border: 1px solid #e2e8f0;
+    color: #1a202c; 
+}
+
+/* Scrollbar styling for notebook content */
+.notebook-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notebook-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.notebook-content::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 4px;
+}
+
+.notebook-content::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}

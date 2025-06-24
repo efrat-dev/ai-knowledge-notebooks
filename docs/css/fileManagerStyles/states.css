@@ -1,0 +1,59 @@
+/* states.css - Loading, Error, and UI States */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loading-container {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.loading-spinner {
+    font-size: 2.5rem;
+    color: #4299e1;
+    margin-bottom: 20px;
+}
+
+.loading-container p {
+    margin-top: 20px;
+    color: #718096;
+    font-size: 1.1rem;
+}
+
+.error-container {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.error-message {
+    color: #e53e3e;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.error-details {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 15px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    background: #f7fafc;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.error-suggestion {
+    font-size: 0.9rem;
+    color: #4a5568;
+}

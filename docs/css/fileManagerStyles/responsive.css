@@ -1,0 +1,92 @@
+/* responsive.css - Responsive Design and Mobile Adaptations */
+
+@media (max-width: 768px) {
+    /* Modal adjustments for mobile */
+    #modalContent {
+        width: 95%;
+        margin: 5% auto;
+        max-height: 85vh;
+    }
+    
+    #modalContent > * {
+        padding: 0 20px;
+    }
+    
+    .history-nav-bar {
+        padding: 12px 20px;
+        margin: 0 -20px 15px -20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .history-nav-buttons {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .history-position {
+        order: 1;
+    }
+    
+    .close-btn {
+        order: 3;
+        margin: 0 auto;
+    }
+    
+    /* Access buttons mobile layout */
+    .access-buttons-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .access-button {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    /* Notebook content mobile adjustments */
+    .notebook-content {
+        padding: 15px;
+        max-height: 50vh;
+    }
+    
+    .markdown-cell, .code-header, .code-output {
+        padding: 15px;
+    }
+    
+    .md-h1 {
+        font-size: 1.5rem;
+    }
+    
+    .md-h2 {
+        font-size: 1.3rem;
+    }
+    
+    .md-h3 {
+        font-size: 1.1rem;
+    }
+    
+    .code-content {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #modalContent h2 {
+        font-size: 1.4rem;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    .nav-button span {
+        display: none;
+    }
+    
+    .nav-button {
+        padding: 10px;
+        min-width: auto;
+    }
+}
