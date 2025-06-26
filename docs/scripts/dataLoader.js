@@ -1,6 +1,8 @@
 // dataLoader.js
 // Handles loading data from GitHub API and processing repository structure
 
+// Assumes NOTEBOOKS_FOLDER is defined globally or imported from config.js
+
 // Loads live data from GitHub repository API
 async function loadLiveData() {
     const controller = new AbortController();
@@ -13,7 +15,7 @@ async function loadLiveData() {
                 'Accept': 'application/vnd.github.v3+json'
             }
         });
-        
+
         clearTimeout(timeoutId);
 
         if (!response.ok) {
@@ -21,7 +23,7 @@ async function loadLiveData() {
         }
 
         const data = await response.json();
-        
+
         if (!data.tree) {
             throw new Error('Invalid response structure');
         }
@@ -32,9 +34,16 @@ async function loadLiveData() {
 
         data.tree.forEach(item => {
             if (item.path.endsWith('.ipynb')) {
-                const parts = item.path.split('/');
+                // Strip the 'notebooks/' prefix if it exists
+                let relativePath = item.path.startsWith(NOTEBOOKS_FOLDER)
+                    ? item.path.replace(NOTEBOOKS_FOLDER, '')
+                    : item.path;
+
+                if (relativePath.trim() === '') return; // Skip empty paths
+
+                const parts = relativePath.split('/');
                 let category = 'root';
-                
+
                 if (parts.length > 1) {
                     category = parts[0];
                 }
@@ -45,7 +54,7 @@ async function loadLiveData() {
 
                 const file = {
                     name: parts[parts.length - 1],
-                    path: item.path,
+                    path: relativePath,
                     size: item.size
                 };
 
