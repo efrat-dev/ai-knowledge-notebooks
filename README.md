@@ -22,7 +22,20 @@ Each Jupyter notebook focuses on theoretical understanding, and includes:
 🛑 **Note:** This repository does **not** include code, implementation, or practical demos. It is intended as a clean, theory-focused knowledge base.
 
 ---
+## 🌐 Interactive Web Version
 
+Looking for a more visual and accessible way to browse the notebooks?
+
+🚀 **Explore the entire collection online in a clean, user-friendly interface:**  
+👉 [**AI Knowledge Hub →**](https://efrat-dev.github.io/ai-knowledge-notebooks/)
+
+- Browse by topic with live search  
+- Open notebooks directly in **Google Colab**, **nbviewer**, or a built-in viewer  
+- Beautiful, responsive UI for seamless reading
+
+No setup required — just click, explore, and learn.
+
+---
 
 ## 🔍 Purpose
 
