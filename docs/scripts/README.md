@@ -1,10 +1,10 @@
 # AI Knowledge Hub - Core Architecture & System Overview
 
 ## 📚 Full Documentation – Navigation Guide
-- **[📋 Core Architecture & System Overview](core_architecture_overview)** ← You are here  
-- **[🎨 UI Components & User Interface](ui_components_interface)**  
-- **[📁 File Management & Modal System](file_management_modals)**  
-- **[🔧 Advanced Features & Integration](advanced_features_integration)**
+- **[📋 Core Architecture & System Overview](./README.md)** ← You are here  
+- **[🎨 UI Components & User Interface](./documentation/ui_components_interface.md)**  
+- **[📁 File Management & Modal System](./documentation/file_management_modals.md)**  
+- **[🔧 Advanced Features & Integration](./documentation/advanced_feature_integration.md)**
 
 ---
 
@@ -169,6 +169,6 @@ function updateStatus(status, text) {
 ---
 
 ## 📚 View Details
-- **[🎨 UI Components & User Interface](ui_components_interface)** 
-- **[📁 File Management & Modal System](file_management_modals)** 
-- **[🔧 Advanced Features & Integration](advanced_features_integration)** 
+- **[🎨 UI Components & User Interface](./documentation/ui_components_interface.md)** 
+- **[📁 File Management & Modal System](./documentation/file_management_modals.md)** 
+- **[🔧 Advanced Features & Integration](./documentation/advanced_feature_integration.md)** 
