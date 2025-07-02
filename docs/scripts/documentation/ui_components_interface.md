@@ -4,7 +4,7 @@
 - **[📋 Core Architecture & System Overview](../README.md)** 
 - **[🎨 UI Components & User Interface](ui_components_interface)** ← You are here  
 - **[📁 File Management & Modal System](file_management_modals)** 
-- **[🔧 Advanced Features & Integration](advanced_features_integration)**
+- **[🔧 Advanced Features & Integration](advanced_feature_integration)**
 
 ---
 
@@ -199,4 +199,4 @@ function setupEventListeners() {
 ## 📚 Links to Additional Guides
 - **[📋 Core Architecture & System Overview](../README.md)** 
 - **[📁 File Management & Modal System](file_management_modals)**
-- **[🔧 Advanced Features & Integration](advanced_features_integration)** 
+- **[🔧 Advanced Features & Integration](advanced_feature_integration)** 

@@ -1,6 +1,6 @@
 # AI Knowledge Hub - Advanced Features & Integration
 
-## 📚 תיעוד מלא - מדריך ניווט
+## 📚 Full Documentation – Navigation Guide
 - **[📋 Core Architecture & System Overview](../README.md)** 
 - **[🎨 UI Components & User Interface](ui_components_interface)** 
 - **[📁 File Management & Modal System](file_management_modals)** 
