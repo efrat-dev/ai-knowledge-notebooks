@@ -2,9 +2,9 @@
 
 ## 📚 Full Documentation – Navigation Guide
 - **[📋 Core Architecture & System Overview](../README.md)** 
-- **[🎨 UI Components & User Interface](./ui_components_interface)** 
-- **[📁 File Management & Modal System](./file_management_modals)**  ← You are here  
-- **[🔧 Advanced Features & Integration](./advanced_feature_integration)** 
+- **[🎨 UI Components & User Interface](/docs/scripts/documentation/ui_components_interface)** 
+- **[📁 File Management & Modal System](/docs/scripts/documentation/file_management_modals)**  ← You are here  
+- **[🔧 Advanced Features & Integration](/docs/scripts/documentation/advanced_feature_integration)** 
 
 ---
 
@@ -238,5 +238,5 @@ document.addEventListener('keydown', function(event) {
 
 ## 📚 Links to Additional Guides
 - **[📋 Core Architecture & System Overview](../README.md)** 
-- **[🎨 UI Components & User Interface](./ui_components_interface)** 
-- **[🔧 Advanced Features & Integration](./advanced_feature_integration)** 
+- **[🎨 UI Components & User Interface](/docs/scripts/documentation/ui_components_interface)** 
+- **[🔧 Advanced Features & Integration](/docs/scripts/documentation/advanced_feature_integration)** 
