@@ -2,9 +2,9 @@
 
 ## 📚 Full Documentation – Navigation Guide
 - **[📋 Core Architecture & System Overview](../README.md)** 
-- **[🎨 UI Components & User Interface](/docs/scripts/documentation/ui_components_interface)** ← You are here  
-- **[📁 File Management & Modal System](/docs/scripts/documentation/file_management_modals)** 
-- **[🔧 Advanced Features & Integration](/docs/scripts/documentation/advanced_feature_integration)**
+- **[🎨 UI Components & User Interface](./ui_components_interface.md)** ← You are here  
+- **[📁 File Management & Modal System](./file_management_modals.md)** 
+- **[🔧 Advanced Features & Integration](./advanced_feature_integration.md)**
 
 ---
 
@@ -198,5 +198,5 @@ function setupEventListeners() {
 
 ## 📚 Links to Additional Guides
 - **[📋 Core Architecture & System Overview](../README.md)** 
-- **[📁 File Management & Modal System](/docs/scripts/documentation/file_management_modals)**
-- **[🔧 Advanced Features & Integration](/docs/scripts/documentation/advanced_feature_integration)** 
+- **[📁 File Management & Modal System](./file_management_modals.md)**
+- **[🔧 Advanced Features & Integration](./advanced_feature_integration.md)** 
