@@ -2,9 +2,9 @@
 
 ## 📚 Full Documentation – Navigation Guide
 - **[📋 Core Architecture & System Overview](../README.md)** 
-- **[🎨 UI Components & User Interface](/docs/scripts/documentation/ui_components_interface)** 
-- **[📁 File Management & Modal System](/docs/scripts/documentation/file_management_modals.md)** 
-- **[🔧 Advanced Features & Integration](/docs/scripts/documentation/advanced_features_integration)** ← You are here  
+- **[🎨 UI Components & User Interface](./ui_components_interface.md)** 
+- **[📁 File Management & Modal System](./file_management_modals.md)** 
+- **[🔧 Advanced Features & Integration](./advanced_features_integration.md)** ← You are here  
 
 ---
 
@@ -220,5 +220,5 @@ This architecture provides a solid foundation for a modern, responsive, and main
 
 ## 📚 Links to Additional Guides
 - **[📋 Core Architecture & System Overview](../README.md)** 
-- **[🎨 UI Components & User Interface](/docs/scripts/documentation/ui_components_interface)** 
-- **[📁 File Management & Modal System](/docs/scripts/documentation/file_management_modals)** 
+- **[🎨 UI Components & User Interface](./ui_components_interface.md)** 
+- **[📁 File Management & Modal System](./file_management_modals.md)** 
